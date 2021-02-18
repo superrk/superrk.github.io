@@ -6,11 +6,18 @@
   "author": "rongkai",
   "license": "MIT",
   "devDependencies": {
-    "vuepress": "^2.0.0-alpha.21"
+    "@tailwindcss/postcss7-compat": "^2.0.3",
+    "autoprefixer": "^9.8.6",
+    "postcss": "^7.0.35",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3",
+    "vuepress": "^1.8.1"
   },
   "scripts": {
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
+    "dev": "vuepress dev docs --temp .temp",
+    "build": "vuepress build docs",
     "docs:info": "vuepress info docs"
+  },
+  "dependencies": {
+    "vuepress-theme-reco": "1.6.0"
   }
 }

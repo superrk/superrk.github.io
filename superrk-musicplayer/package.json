@@ -1,0 +1,11 @@
+{
+  "name": "superrk-musicplayer",
+  "version": "1.0.0",
+  "description": "music player",
+  "main": "index.js",
+  "author": "superrk",
+  "license": "MIT",
+  "dependencies": {
+    "npx": "^10.2.2"
+  }
+}

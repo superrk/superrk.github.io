@@ -164,6 +164,7 @@ audio
 #song
   position: fixed
   bottom: 240px
+  z-index: 2;
   right: 290px
   display: block
   img

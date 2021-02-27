@@ -1,5 +1,5 @@
 function post(url, data) {
-    url = "https://39.101.167.240" + url
+    url = "https://music.superrk.top" + url
     // Default options are marked with *
     return fetch(url, {
             body: JSON.stringify(data), // must match 'Content-Type' header
@@ -18,7 +18,7 @@ function post(url, data) {
 }
 
 function get(url) {
-    url = "https://39.101.167.240" + url
+    url = "https://music.superrk.top" + url
     // Default options are marked with *
     return fetch(url, {
             body: null, // must match 'Content-Type' header

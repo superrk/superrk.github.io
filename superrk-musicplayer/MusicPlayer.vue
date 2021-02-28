@@ -2,10 +2,16 @@
   <div>
     <audio ref="audio" autoplay @ended="next" @timeupdate="timeUpdate"></audio>
     <div v-if="currentSong.picUrl" class="lyric">
-      <div v-if="currentSong.picUrl" id="song" @click="debounceNext">
+      <div
+        v-if="currentSong.picUrl"
+        id="song"
+        @click="sleep = !sleep"
+        :class="{ sleep: sleep }"
+      >
         <img :src="currentSong.picUrl" alt="pic" />
       </div>
       <div
+        v-show="!sleep"
         class="music_dis"
         :style="{ backgroundImage: 'url(' + currentSong.picUrl + ')' }"
       >
@@ -13,6 +19,8 @@
           class="music_shlter"
           :style="{ backgroundImage: 'url(' + currentSong.picUrl + ')' }"
         ></div>
+        <div class="music-title">{{ currentSong.name }}</div>
+        <div class="music-title">{{ currentSong.singer }}</div>
         <ul class="music_words">
           <div
             class="music_words_box"
@@ -31,6 +39,19 @@
             </li>
           </div>
         </ul>
+        <div style="display: flex">
+          <div
+            class="play"
+            @click="changePlay"
+            :class="{ pause: playing }"
+          ></div>
+          <progress
+            class="process"
+            @click="progress"
+            :value="health"
+            max="100"
+          ></progress>
+        </div>
       </div>
     </div>
   </div>
@@ -41,9 +62,12 @@ import { post, get } from "./utils";
 export default {
   data() {
     return {
+      sleep: true,
       songs: [],
       index: 0,
       currentSong: {},
+      health: 0,
+      playing: true,
       lyrics: [],
       currentReverseIndex: 0,
     };
@@ -52,6 +76,11 @@ export default {
     this.getSong();
   },
   methods: {
+    changePlay() {
+      let pause = this.$refs.audio.paused;
+      pause ? this.$refs.audio.play() : this.$refs.audio.pause();
+      this.playing = pause;
+    },
     debounceNext: debounce(function () {
       this.next();
     }, 200),
@@ -70,7 +99,7 @@ export default {
       this.$refs.audio.src = songresult.data[0].url;
     },
     async getSong() {
-      let playListDetail = await get("/playlist/detail?id=2606073712");
+      let playListDetail = await get("/playlist/detail?id=149539021");
       let trackIds = playListDetail.playlist.trackIds
         .map((item) => item.id)
         .join(",");
@@ -79,6 +108,7 @@ export default {
         return {
           ...item.al,
           id: item.id,
+          name: item.name,
           singer: item.ar[0].name,
         };
       });
@@ -101,7 +131,12 @@ export default {
       });
       this.lyrics = list;
     },
+    progress(e) {
+      let value = e.offsetX / 200;
+      this.$refs.audio.currentTime = (this.$refs.audio.duration)*value
+    },
     timeUpdate(e) {
+      this.health = (e.target.currentTime / e.target.duration) * 100;
       let lyrics = JSON.parse(JSON.stringify(this.lyrics));
       lyrics.reverse().some((item, index) => {
         let time = item.time;
@@ -146,6 +181,8 @@ audio
     position: relative
     background-size: 100% 100%
     line-height: 1.7
+    padding: 0em
+    margin: auto 1.2em
     li
       list-style: none
       font-size: 12px
@@ -155,6 +192,7 @@ audio
     width: 100%
     height: 240px
     position: relative
+    border-radius: 9%
   .music_words_box
     width: 100%
     height: auto
@@ -163,24 +201,49 @@ audio
     transition: all 0.5s
 #song
   position: fixed
-  bottom: 240px
-  z-index: 2;
-  right: 290px
+  z-index: 2
+  transition: all 0.5s
+  right: 288px
   display: block
+  &.sleep
+    right: -30px
+    bottom: 240px
+    &:hover
+      right: 5px
   img
     height: 50px
     width: 50px
     border-radius: 50%
     box-shadow: 0 5px 18px rgb(0 0 0 / 20%)
     animation: changDeg 10s linear 3s infinite
-  &:hover
-    right: 5px
 .music_shlter
   width: 100%
-  height: 100%
+  height: 240px
   position: absolute
-  filter: blur(10px);
+  filter: blur(10px)
   background-size: 100% 100%
   transition: all 0.5s
-  z-index: unset;
+  z-index: unset
+.music-title
+  color: rgba(255, 255, 255, 0.6)
+  text-align: center
+  position: relative
+  line-height: 1.7
+.play
+  position: relative
+  margin-left: 10px
+.process
+  position: relative
+  width: 200px
+  height: 3px
+  margin: auto 10px
+  background: #121212
+.play
+  background: url('./img/play.png')
+  background-size: 100% 100%
+  height: 28px
+  width: 28px
+  &.pause
+    background: url('./img/pause.png')
+    background-size: 100% 100%
 </style>

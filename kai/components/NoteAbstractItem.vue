@@ -1,31 +1,35 @@
 <template>
-  <div
-    class="abstract-item"
-    @click="$router.push(item.path)">
-    <reco-icon v-if="item.frontmatter.sticky" icon="reco-sticky" />
-    <div class="title">
-      <reco-icon v-if="item.frontmatter.keys" icon="reco-lock" />
-      <router-link :to="item.path">{{item.title}}</router-link>
+  <div class="abstract-item" @click="$router.push(item.path)">
+    <div class="img">
+      <img
+        src="https://api.btstu.cn/sjbz/api.php?lx=fengjing&format=images&method=mobile" height="300px" width="200px"
+        alt=""
+      />
     </div>
-    <div class="abstract" v-html="item.excerpt"></div>
-    <PageInfo
-      :pageInfo="item"
-      :currentTag="currentTag">
-    </PageInfo>
+    <div>
+      <reco-icon v-if="item.frontmatter.sticky" icon="reco-sticky" />
+      <div class="title">
+        <reco-icon v-if="item.frontmatter.keys" icon="reco-lock" />
+        <router-link :to="item.path">{{ item.title }}</router-link>
+      </div>
+      <div class="abstract" v-html="item.excerpt"></div>
+      <PageInfo :pageInfo="item" :currentTag="currentTag"> </PageInfo>
+    </div>
   </div>
 </template>
 
 <script>
-import { RecoIcon } from '@vuepress-reco/core/lib/components'
-import PageInfo from './PageInfo'
+import { RecoIcon } from "@vuepress-reco/core/lib/components";
+import PageInfo from "./PageInfo";
 export default {
   components: { PageInfo, RecoIcon },
-  props: ['item', 'currentPage', 'currentTag']
-}
+  props: ["item", "currentPage", "currentTag"],
+};
 </script>
 
 <style lang="stylus" scoped>
 .abstract-item
+  display flex
   position relative
   margin: 0 auto 20px;
   padding: 16px 20px;
@@ -83,6 +87,10 @@ export default {
         color $accentColor
       &:hover
         color $accentColor
+  .img
+    margin auto 20px auto 0
+  img 
+    border-radius 20px
 @media (max-width: $MQMobile)
   .tags
     display block

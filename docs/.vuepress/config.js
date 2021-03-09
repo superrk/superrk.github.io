@@ -1,5 +1,6 @@
+const path = require('path')
 module.exports = {
-  theme: "reco",
+  theme: path.resolve(__dirname, '../../kai/'),
   title: "期待每一次相遇",
   plugins: ['superrk-musicplayer'],
   themeConfig: {

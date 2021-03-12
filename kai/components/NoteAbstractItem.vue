@@ -1,8 +1,10 @@
 <template>
   <div class="abstract-item" @click="$router.push(item.path)">
-    <div class="img">
+    <div class="img" v-if="index % 2 == 1">
       <img
-        src="https://api.btstu.cn/sjbz/api.php?lx=fengjing&format=images&method=mobile" height="300px" width="200px"
+        :src="'https://api.btstu.cn/sjbz/api.php?lx=fengjing&format=images&method=mobile&index='+index"
+        height="300px"
+        width="300px"
         alt=""
       />
     </div>
@@ -15,6 +17,14 @@
       <div class="abstract" v-html="item.excerpt"></div>
       <PageInfo :pageInfo="item" :currentTag="currentTag"> </PageInfo>
     </div>
+    <div class="img" v-if="index % 2 != 1">
+      <img
+        :src="'https://api.btstu.cn/sjbz/api.php?lx=fengjing&format=images&method=mobile&index='+index"
+        height="300px"
+        width="300px"
+        alt=""
+      />
+    </div>
   </div>
 </template>
 
@@ -23,13 +33,14 @@ import { RecoIcon } from "@vuepress-reco/core/lib/components";
 import PageInfo from "./PageInfo";
 export default {
   components: { PageInfo, RecoIcon },
-  props: ["item", "currentPage", "currentTag"],
+  props: ["item", "currentPage", "currentTag", "index"],
 };
 </script>
 
 <style lang="stylus" scoped>
 .abstract-item
   display flex
+  justify-content space-between
   position relative
   margin: 0 auto 20px;
   padding: 16px 20px;
@@ -89,7 +100,7 @@ export default {
         color $accentColor
   .img
     margin auto 20px auto 0
-  img 
+  img
     border-radius 20px
 @media (max-width: $MQMobile)
   .tags

@@ -2,9 +2,7 @@
   <div class="abstract-item" @click="$router.push(item.path)">
     <div class="img" v-if="index % 2 == 1">
       <img
-        :src="'https://api.btstu.cn/sjbz/api.php?lx=fengjing&format=images&method=mobile&index='+index"
-        height="300px"
-        width="300px"
+        :src="'https://api.btstu.cn/sjbz/api.php?lx=fengjing&format=images&method=pc&index='+index"
         alt=""
       />
     </div>
@@ -19,9 +17,7 @@
     </div>
     <div class="img" v-if="index % 2 != 1">
       <img
-        :src="'https://api.btstu.cn/sjbz/api.php?lx=fengjing&format=images&method=mobile&index='+index"
-        height="300px"
-        width="300px"
+        :src="'https://api.btstu.cn/sjbz/api.php?lx=fengjing&format=images&method=pc&index='+index"
         alt=""
       />
     </div>
@@ -100,8 +96,17 @@ export default {
         color $accentColor
   .img
     margin auto 20px auto 0
+    width 45%
+    overflow: hidden;
+    border-radius .5rem
   img
-    border-radius 20px
+    border-radius .5rem
+    width 100%
+    height 100%
+    transform: scale(1.1);
+    transition: .5s ease-out;
+    &:hover
+      transform: scale(1);
 @media (max-width: $MQMobile)
   .tags
     display block

@@ -4,6 +4,7 @@
       <div v-if="recoShowModule && $page.title" class="page-title">
         <h1 class="title">{{$page.title}}</h1>
         <PageInfo :pageInfo="$page" :showAccessNumber="showAccessNumber"></PageInfo>
+        <div>{{shi}}</div>
       </div>
     </ModuleTransition>
 
@@ -83,6 +84,7 @@ import PageInfo from '@theme/components/PageInfo'
 import { resolvePage, outboundRE, endingSlashRE } from '@theme/helpers/utils'
 import { ModuleTransition } from '@vuepress-reco/core/lib/components'
 import SubSidebar from '@theme/components/SubSidebar'
+import { get } from "@theme/helpers/utils";
 
 export default {
   components: { PageInfo, ModuleTransition, SubSidebar },
@@ -91,7 +93,8 @@ export default {
 
   data () {
     return {
-      isHasKey: true
+      isHasKey: true,
+      shi: ""
     }
   },
 
@@ -175,8 +178,14 @@ export default {
       return this.$showSubSideBar ? {} : { paddingRight: '0' }
     }
   },
-
+  mounted () {
+    this.getShiCi()
+  },
   methods: {
+    async getShiCi(){
+      let shi = await get(`https://v1.alapi.cn/api/shici`);
+      this.shi = shi.data.content
+    },
     createEditLink (repo, docsRepo, docsDir, docsBranch, path) {
       const bitbucket = /bitbucket.org/
       if (bitbucket.test(repo)) {

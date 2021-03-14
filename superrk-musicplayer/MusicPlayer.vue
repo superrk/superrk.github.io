@@ -19,7 +19,7 @@
           class="music_shlter"
           :style="{ backgroundImage: 'url(' + currentSong.picUrl + ')' }"
         ></div>
-        <div class="music-title">{{ currentSong.name }}</div>
+        <div class="music-title" @dblclick="debounceNext">{{ currentSong.name }}</div>
         <div class="music-title">{{ currentSong.singer }}</div>
         <ul class="music_words">
           <div
@@ -67,13 +67,13 @@ export default {
       index: 0,
       currentSong: {},
       health: 0,
-      playing: true,
+      playing: false,
       lyrics: [],
       currentReverseIndex: 0,
     };
   },
   mounted() {
-    // this.getSong();
+    this.getSong();
   },
   methods: {
     changePlay() {
@@ -116,6 +116,7 @@ export default {
       let songresult = await get(`/song/url?id=${this.currentSong.id}`);
       await this.getLyric();
       this.$refs.audio.src = songresult.data[0].url;
+      this.pause()
     },
     async getLyric() {
       let lyricRes = await get(`/lyric?id=${this.currentSong.id}`);

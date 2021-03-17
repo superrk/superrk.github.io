@@ -2,7 +2,10 @@
   <div class="abstract-item" @click="$router.push(item.path)">
     <div class="img" v-if="index % 2 == 1">
       <img
-        :src="'https://api.btstu.cn/sjbz/api.php?lx=fengjing&format=images&method=pc&index='+index"
+        :src="
+          'https://api.btstu.cn/sjbz/api.php?lx=fengjing&format=images&method=pc&index=' +
+            index
+        "
         alt=""
       />
     </div>
@@ -17,7 +20,10 @@
     </div>
     <div class="img" v-if="index % 2 != 1">
       <img
-        :src="'https://api.btstu.cn/sjbz/api.php?lx=fengjing&format=images&method=pc&index='+index"
+        :src="
+          'https://api.btstu.cn/sjbz/api.php?lx=fengjing&format=images&method=pc&index=' +
+            index
+        "
         alt=""
       />
     </div>
@@ -58,8 +64,32 @@ export default {
     display inline-block
     color $accentColor
     font-size 2.4rem
+  &:before,&:after
+    box-sizing: inherit;
+    content: '';
+    position: absolute;
+    border: 2px solid transparent;
+    width: 0;
+    height: 0;
+  &:before
+    top 0
+    left 0
+  &:after
+    right 0
+    bottom 0
   &:hover
     box-shadow: var(--box-shadow-hover)
+    &:before,&:after
+      width: 100%;
+      height: 100%;
+    &::before
+      border-top-color #69f0ae
+      border-right-color #69f0ae
+      transition: width 0.25s ease-out, height 0.25s ease-out 0.25s;
+    &::after
+      border-bottom-color #69f0ae
+      border-left-color #69f0ae
+      transition: border-color 0s ease-out 0.5s, width 0.25s ease-out 0.5s, height 0.25s ease-out 0.75s;
   .title
     position: relative;
     font-size: 1.28rem;

@@ -4,6 +4,7 @@ module.exports = {
   title: "期待每一次相遇",
   plugins: ['superrk-musicplayer'],
   themeConfig: {
+    mode: 'light',
     author: 'superrk',
     huawei: true,
     record: '京ICP备2021005648号',

@@ -117,6 +117,7 @@ export default {
       await this.getLyric();
       this.$refs.audio.src = songresult.data[0].url;
       this.pause()
+      this.currentReverseIndex = this.lyrics.length - 1
     },
     async getLyric() {
       let lyricRes = await get(`/lyric?id=${this.currentSong.id}`);

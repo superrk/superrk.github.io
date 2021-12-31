@@ -56,5 +56,7 @@ private suspend fun intValue4(): Int {
     delay(1000)
     return 4
 }
+// 结果是 10
+// 耗时 2053
 
 ```
